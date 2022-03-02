@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     private int _playerScore;
     private int _computerScore;
 
+    [SerializeField] private int scoreToWin = 11;
+    [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject playField;
+
     public void PlayerScores()
     {
         _playerScore++;
@@ -34,29 +38,19 @@ public class GameManager : MonoBehaviour
 
     private bool IsGameOver()
     {
-        if (_playerScore == 7)
-        {
-            Debug.Log("You Win!");
-            ResetGame();
-            return true;
-        }
-
-        if (_computerScore == 7)
-        {
-            Debug.Log("You Lose :(");
-            ResetGame();
-            return true;
-        }
-
-        return false;
+        if (_playerScore != scoreToWin && _computerScore != scoreToWin) return false;
+        
+        GameOver();
+        return true;
     }
 
-    private void ResetGame()
+    private void GameOver()
     {
-        _playerScore = 0;
-        _computerScore = 0;
-        ResetScoreTexts();
-        ResetRound();
+        playField.SetActive(false);
+        gameOverMenu.SetActive(true);
+        
+        var resultText = gameOverMenu.transform.Find("Result Text");
+        resultText.GetComponent<Text>().text = _playerScore > _computerScore ? "You win!" : "You lose :(";
     }
 
     private void ResetRound()
@@ -70,11 +64,5 @@ public class GameManager : MonoBehaviour
     private static void SetScoreText(Text scoreText, int score)
     {
         scoreText.text = score < 10 ? '0' + score.ToString() : score.ToString();
-    }
-
-    private void ResetScoreTexts()
-    {
-        playerScoreText.text = "00";
-        computerScoreText.text = "00";
     }
 }
