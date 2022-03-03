@@ -10,7 +10,6 @@ public class GameOverMenu : MonoBehaviour
 
     public void BackToMenu()
     {
-        Debug.Log("quit");
-        Application.Quit();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
