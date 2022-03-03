@@ -38,7 +38,7 @@ public class Ball : MonoBehaviour
                                         Random.Range(0.5f, 1f);
         
         Vector2 direction = new Vector2(x, y);
-        _rigidbody.AddForce(direction * speed);
+        AddForce(direction * speed);
     }
 
     public void AddForce(Vector2 force)
